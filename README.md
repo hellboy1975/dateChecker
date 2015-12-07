@@ -1,2 +1,2 @@
-# dateChecker
-A Date checking and comparison project using Silex
+# date-check
+A simple date checking and comparison project built with Silex

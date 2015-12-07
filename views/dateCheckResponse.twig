@@ -1,0 +1,17 @@
+<br />
+
+<div class="panel panel-info">
+  	<div class="panel-heading">Date checker response:</div>
+  	<div class="panel-body">
+		<p>Start time was <strong>{{ fromDateTime }}</strong> with the timezone <em>{{ fromTimeZone }}</em></p>
+		<p>Finish time was <strong>{{ toDateTime }}</strong> with the timezone <em>{{ toTimeZone }}</em></p>
+    	
+    {% if dateCheckResponse is defined %}
+    	<div class="alert alert-success" role="alert">The difference interval selected is <strong>{{ dateCheckResponse }}</strong></div>
+    {% endif %}
+
+    {% if dateCheckError is defined %}
+    	<div class="alert alert-danger" role="alert">{{ dateCheckError }}</div>
+    {% endif %}
+  	</div>
+</div>

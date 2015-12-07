@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% set current_page_name = 'home' %}
+{% set page_title = 'Home |' %}
+
+{% block content %}
+
+<p>This tool will allow you to enter two date and time values, select a timezone for each and then display a range or data related to them</p>
+
+
+{{ include('dateForm.twig') }}
+
+{# after the form has POST'd the request, it should send back a response we can show #}	
+{% if showResponse is defined %}
+	{{ include('dateCheckResponse.twig') }}
+{% endif %}
+
+
+{% endblock %}   

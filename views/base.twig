@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../web/favicon.ico">
+
+    <title>{{ page_title|default('') }} Date Checker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    {# <link href="/web/css/dateCheck.css" rel="stylesheet"> #}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/" style="color: #2e466a">[aligent]</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li {% if page == "datecheck" %}class="active"{% endif %}><a href="/">Date Checker</a></li>
+            <li {% if page == "about" %}class="active"{% endif %}><a href="about">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container {{ current_page_name|default('undefined') }}">
+
+    {% if displayError is defined and displayError == true %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Error: {{ errorTitle }}</div>
+        <div class="panel-body">
+            {{ errorMessage }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    </div> <!-- /container -->
+
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="/js/dateCheck.js"></script>
+    
+
+  </body>
+</html>

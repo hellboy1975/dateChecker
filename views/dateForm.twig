@@ -1,0 +1,80 @@
+{{ form_start(dateForm) }}
+
+<div class="panel panel-default">
+  	<div class="panel-heading">Start:</div>
+  	<div class="panel-body">
+    	<div class="row form-inline">
+		    <fieldset>
+		        <div class="col-lg-6">
+				    <div class="input-group">
+				      <span class="input-group-addon" id="basic-addon3">Date/Time:</span>
+				      {{ form_widget(dateForm.timeFrom) }}
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+				<div class="col-lg-6">
+				    <div class="input-group">
+				      <span class="input-group-addon" id="basic-addon3">Zone:</span>
+				      {{ form_widget(dateForm.timeFromZone) }}            
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+		    </fieldset>
+		</div>	
+  	</div>
+</div>
+
+
+
+<div class="panel panel-default">
+  	<div class="panel-heading">Finish:</div>
+  	<div class="panel-body">
+    	<div class="row form-inline">
+		    <fieldset>
+		        <div class="col-lg-6">
+				    <div class="input-group">
+				      <span class="input-group-addon" id="basic-addon3">Date/Time:</span>
+				      {{ form_widget(dateForm.timeTo) }}
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+				<div class="col-lg-6">
+				    <div class="input-group">
+				      <span class="input-group-addon" id="basic-addon3">Zone:</span>
+				      {{ form_widget(dateForm.timeToZone) }}            
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+		    </fieldset>
+		</div>	
+  	</div>
+</div>
+
+<div class="panel panel-default">
+  	<div class="panel-heading">Settings:</div>
+  	<div class="panel-body">
+    	<div class="row form-inline">
+		    <fieldset>
+		        <div class="col-lg-6">
+				    <div class="input-group">
+				      <span class="input-group-addon" id="basic-addon3">Difference:</span>
+				      {{ form_widget(dateForm.difference) }}
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+				<div class="col-lg-6">
+				    <div class="input-group">
+				      <button class="btn btn-default">Display</button>
+				    </div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+
+		    </fieldset>
+		</div>	
+  	</div>
+</div>
+
+
+
+{# {{ form_widget(dateForm) }} #}
+{{ form_end(dateForm) }}
+
