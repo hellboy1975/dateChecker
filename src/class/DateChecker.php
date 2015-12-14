@@ -65,8 +65,10 @@ class DateChecker
 			throw new InvalidArgumentException('timeTo must be after timeFrom');		
 		}
 
+		// grab the number of seconds between our two DateTime variables
 		$seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
 
+		// We'll also use the results of the diff function to determine some of the trickier queries
 		$difference = $this->_from_DT->diff($this->_to_DT);
 
 
@@ -134,6 +136,7 @@ class DateChecker
 	    $periods = new DatePeriod($this->_from_DT, $interval, $to);
 
 	    $days = 0;
+	    // loop through each day, and if the day is Mon-Fri then we'll add it to our total
 	    foreach ($periods as $period) {
 	        if (!in_array($period->format('N'), $workingDays)) continue;
 	        $days++;
@@ -149,9 +152,16 @@ class DateChecker
 
 		// find the next or previous Sunday (unless it's already one!)
 		if ($this->_from_DT->format('N') != 7) $fromSunday = $this->_from_DT->modify('next sunday');
-		if ($this->_to_DT->format('N') != 7) $toSunday = $this->_to_DT->modify('previous sunday');
+		else $fromSunday = $this->_from_DT;
 
-		$seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
+		if ($this->_to_DT->format('N') != 7) $toSunday = $this->_to_DT->modify('previous sunday');
+		$toSunday = $this->_to_DT;
+
+		// it's possible that the modify function can make the toSunday occur before the fromSunday value, so where this is the case the correct answer is 0 
+		if ($toSunday < $fromSunday) return 0;
+		
+		// $seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
+		$seconds = $toSunday->getTimestamp() - $fromSunday->getTimestamp();
 		return intval($seconds / 604800);
 
 	}

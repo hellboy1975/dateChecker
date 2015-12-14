@@ -65,7 +65,9 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
             'Complete Weeks in a 2015' => array('compWeeks', '2015-01-01 00:00:00 ', '2016-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '51 complete weeks (starting Sunday)'),
             // starts on a Sunday, so will result in 52 weeks
             'Complete Weeks in a 2006' => array('compWeeks', '2006-01-01 00:00:00 ', '2007-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '52 complete weeks (starting Sunday)'),
-            
+            // a very short week should return 0 days correctly, and not -1
+            'Complete Weeks - short week' => array('compWeeks', '2015-12-14 00:00:00 ', '2015-12-16 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '0 complete weeks (starting Sunday)'),
+
             // misc tests
             /* for a week day to register it must be 24 hours since the time associated with the from date, hence the first test below registers 9 days, while the next gives 10. */
             'Weekdays over a partial day period' => array('weekdays', '12/07/2015 01:00 AM', '12/18/2015 12:00 AM', "Australia/Adelaide", "Australia/Adelaide", '9 weekdays'),
