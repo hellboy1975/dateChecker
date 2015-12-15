@@ -60,7 +60,7 @@ $app->match('/', function (Request $request) use ($app) {
             $response = print_r($data, true);
 
             try {
-                $checker = new DateChecker($data);
+                $checker = new aligent\DateChecker($data);
             } catch  (Exception $e) {
                 $templateData['dateCheckError'] = $e->getMessage();   
             }

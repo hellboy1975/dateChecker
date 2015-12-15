@@ -1,5 +1,8 @@
 <?php
 
+namespace aligent;
+// use \DateTime;
+
 class DateChecker
 {
 
@@ -14,31 +17,31 @@ class DateChecker
 
 		// the timeFrom and timeTo args are already DateTime values thanks to Silex, but they are in UTC.
 		// We should convert them to the timezone the user has selected 
-
+		 
 		// check that timeFrom and timeTo are valid DateTime objects
-		if (!($args['timeFrom'] instanceof DateTime)) {
-		  	throw new InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
+		if (!($args['timeFrom'] instanceof \DateTime)) {
+		  	//throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
 		} 
-		if (!($args['timeTo'] instanceof DateTime)) {
-		  	throw new InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
+		if (!($args['timeTo'] instanceof \DateTime)) {
+		  	throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
 		} 
 
 		// Make sure the time zones are valid too
-		$zones = DateTimeZone::listIdentifiers();
+		$zones = \DateTimeZone::listIdentifiers();
 
 		if (! in_array( $args['timeFromZone'], $zones ) ) {
-			throw new InvalidArgumentException('fromZone should be a valid DateTimeZone. Input was: ' . $args['timeFromZone']);	
+			throw new \InvalidArgumentException('fromZone should be a valid DateTimeZone. Input was: ' . $args['timeFromZone']);	
 		}
 
 		if (! in_array( $args['timeToZone'], $zones ) ) {
-			throw new InvalidArgumentException('toZone should be a valid DateTimeZone. Input was: ' . $args['timeToZone']);	
+			throw new \InvalidArgumentException('toZone should be a valid DateTimeZone. Input was: ' . $args['timeToZone']);	
 		}
 		 
 		// $this->_from_DT = $args['timeFrom']->setTimezone(new DateTimeZone( $args['timeFromZone'] ) );
 		// $this->_to_DT = $args['timeTo']->setTimezone(new DateTimeZone( $args['timeToZone'] ) );
 
-		$this->_from_DT = new DateTime( $args['timeFrom']->format('Y-m-d H:i:s'), new DateTimeZone( $args['timeFromZone'] ));
-		$this->_to_DT = new DateTime( $args['timeTo']->format('Y-m-d H:i:s'), new DateTimeZone( $args['timeToZone'] ));
+		$this->_from_DT = new \DateTime( $args['timeFrom']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeFromZone'] ));
+		$this->_to_DT = new \DateTime( $args['timeTo']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeToZone'] ));
 
 	}
 	/**
@@ -58,11 +61,11 @@ class DateChecker
 	public function timeDifference($diffType = 'days') {
 
 		if (! in_array( $diffType, self::$DIFF_TYPES ) ) {
-			throw new InvalidArgumentException('diffType is not a valid type. Input was: ' . $diffType);	
+			throw new \InvalidArgumentException('diffType is not a valid type. Input was: ' . $diffType);	
 		}
 
 		if ($this->_checkFromBeforeTo() ) {
-			throw new InvalidArgumentException('timeTo must be after timeFrom');		
+			throw new \InvalidArgumentException('timeTo must be after timeFrom');		
 		}
 
 		// grab the number of seconds between our two DateTime variables
@@ -132,8 +135,8 @@ class DateChecker
 
 	    $to = $this->_to_DT;
 	    // $to->modify('+1 day');
-	    $interval = new DateInterval('P1D');
-	    $periods = new DatePeriod($this->_from_DT, $interval, $to);
+	    $interval = new \DateInterval('P1D');
+	    $periods = new \DatePeriod($this->_from_DT, $interval, $to);
 
 	    $days = 0;
 	    // loop through each day, and if the day is Mon-Fri then we'll add it to our total

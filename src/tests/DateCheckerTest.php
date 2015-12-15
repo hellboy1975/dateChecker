@@ -1,4 +1,5 @@
 <?php
+
 class DateCheckerTest extends PHPUnit_Framework_TestCase
 {
     
@@ -14,7 +15,7 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
         $data['timeFromZone'] = "America/Los_Angeles";
         $data['timeToZone'] = "Australia/Adelaide";
 
-        $dc = new DateChecker($data);
+        $dc = new \aligent\DateChecker($data);
 
         // Act
         $result = $dc->timeDifference('seconds');
@@ -31,7 +32,7 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
         $data['timeFromZone'] = $fromZone;
         $data['timeToZone'] = $toZone;
 
-        $dc = new DateChecker($data);
+        $dc = new \aligent\DateChecker($data);
 
         // Act
         $result = $dc->timeDifference($type);
