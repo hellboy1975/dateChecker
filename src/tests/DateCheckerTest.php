@@ -1,4 +1,5 @@
 <?php
+
 class DateCheckerTest extends PHPUnit_Framework_TestCase
 {
     
@@ -14,7 +15,7 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
         $data['timeFromZone'] = "America/Los_Angeles";
         $data['timeToZone'] = "Australia/Adelaide";
 
-        $dc = new DateChecker($data);
+        $dc = new \aligent\DateChecker($data);
 
         // Act
         $result = $dc->timeDifference('seconds');
@@ -31,7 +32,7 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
         $data['timeFromZone'] = $fromZone;
         $data['timeToZone'] = $toZone;
 
-        $dc = new DateChecker($data);
+        $dc = new \aligent\DateChecker($data);
 
         // Act
         $result = $dc->timeDifference($type);
@@ -53,6 +54,18 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
             'Months in a decade' => array('months', '2000-01-01 00:00:00 ', '2010-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '120 months'),
             'Years in a decade' => array('years', '2000-01-01 00:00:00 ', '2010-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '10 years'),
 
+            // Daylight savings tests - at 02:00:00 we may gain or lose an hour as the DST switch occurs.  
+            // In Brisbane no DST is used, so that should remain the same!
+            'Minutes in a daylight saving start' => array('minutes', '2015-04-05 00:00:00', '2015-04-05 04:00:00', "Australia/Adelaide", "Australia/Adelaide", '300 minutes'),
+            'Minutes in a daylight saving start in non-DST zone' => array('minutes', '2015-04-05 00:00:00', '2015-04-05 04:00:00', "Australia/Brisbane", "Australia/Brisbane", '240 minutes'),
+            'Minutes in a daylight saving end' => array('minutes', '2015-10-04 00:00:00', '2015-10-04 04:00:00', "Australia/Adelaide", "Australia/Adelaide", '180 minutes'),
+            'Minutes in a daylight saving end in non-DST zone' => array('minutes', '2015-10-04 00:00:00', '2015-10-04 04:00:00', "Australia/Brisbane", "Australia/Brisbane", '240 minutes'),
+            'Minutes in a daylight non-transition' => array('minutes', '2015-01-01 00:00:00 ', '2015-01-01 04:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '240 minutes'),
+
+            // comparisons between timezones that do and don't use DST should reflect the hour difference
+            'Minutes in a daylight saving end in non-DST zone' => array('minutes', '2015-12-04 00:00:00', '2015-12-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '180 minutes'),
+            'Minutes in a daylight saving end in non-DST zone' => array('minutes', '2015-08-04 00:00:00', '2015-08-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '240 minutes'),    
+            
             // the number of days and weeks in a leap year is different from a normal year!
             'Weeks in leap-year' => array('weeks', '2000-01-01 00:00:00 ', '2001-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '52.285714285714 weeks'),
             'Days in leap-year 2000' => array('days', '2000-01-01 00:00:00 ', '2001-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '366 days'),

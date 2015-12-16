@@ -1,5 +1,8 @@
 <?php
 
+namespace aligent;
+// use \DateTime;
+
 class DateChecker
 {
 
@@ -9,36 +12,41 @@ class DateChecker
 	private $_format = 'Y-m-d H:i:s';
 
 	public static $DIFF_TYPES = array('seconds', 'minutes', 'hours', 'days', 'weeks', 'weekdays', 'compWeeks', 'months', 'years');
+
+	const SECONDS_PER_MINUTE = 60;
+	const SECONDS_PER_HOUR = 3600;
+	const SECONDS_PER_DAY = 86400;
+	const SECONDS_PER_WEEK = 604800;
  
 	public function __construct($args) {
 
 		// the timeFrom and timeTo args are already DateTime values thanks to Silex, but they are in UTC.
 		// We should convert them to the timezone the user has selected 
-
+		 
 		// check that timeFrom and timeTo are valid DateTime objects
-		if (!($args['timeFrom'] instanceof DateTime)) {
-		  	throw new InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
+		if (!($args['timeFrom'] instanceof \DateTime)) {
+		  	//throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
 		} 
-		if (!($args['timeTo'] instanceof DateTime)) {
-		  	throw new InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
+		if (!($args['timeTo'] instanceof \DateTime)) {
+		  	throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
 		} 
 
 		// Make sure the time zones are valid too
-		$zones = DateTimeZone::listIdentifiers();
+		$zones = \DateTimeZone::listIdentifiers();
 
 		if (! in_array( $args['timeFromZone'], $zones ) ) {
-			throw new InvalidArgumentException('fromZone should be a valid DateTimeZone. Input was: ' . $args['timeFromZone']);	
+			throw new \InvalidArgumentException('fromZone should be a valid DateTimeZone. Input was: ' . $args['timeFromZone']);	
 		}
 
 		if (! in_array( $args['timeToZone'], $zones ) ) {
-			throw new InvalidArgumentException('toZone should be a valid DateTimeZone. Input was: ' . $args['timeToZone']);	
+			throw new \InvalidArgumentException('toZone should be a valid DateTimeZone. Input was: ' . $args['timeToZone']);	
 		}
 		 
 		// $this->_from_DT = $args['timeFrom']->setTimezone(new DateTimeZone( $args['timeFromZone'] ) );
 		// $this->_to_DT = $args['timeTo']->setTimezone(new DateTimeZone( $args['timeToZone'] ) );
 
-		$this->_from_DT = new DateTime( $args['timeFrom']->format('Y-m-d H:i:s'), new DateTimeZone( $args['timeFromZone'] ));
-		$this->_to_DT = new DateTime( $args['timeTo']->format('Y-m-d H:i:s'), new DateTimeZone( $args['timeToZone'] ));
+		$this->_from_DT = new \DateTime( $args['timeFrom']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeFromZone'] ));
+		$this->_to_DT = new \DateTime( $args['timeTo']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeToZone'] ));
 
 	}
 	/**
@@ -58,11 +66,11 @@ class DateChecker
 	public function timeDifference($diffType = 'days') {
 
 		if (! in_array( $diffType, self::$DIFF_TYPES ) ) {
-			throw new InvalidArgumentException('diffType is not a valid type. Input was: ' . $diffType);	
+			throw new \InvalidArgumentException('diffType is not a valid type. Input was: ' . $diffType);	
 		}
 
 		if ($this->_checkFromBeforeTo() ) {
-			throw new InvalidArgumentException('timeTo must be after timeFrom');		
+			throw new \InvalidArgumentException('timeTo must be after timeFrom');		
 		}
 
 		// grab the number of seconds between our two DateTime variables
@@ -78,22 +86,22 @@ class DateChecker
 		}
 
 		else if ($diffType == 'minutes') {
-			$minutes = $seconds / 60;
+			$minutes = $seconds / self::SECONDS_PER_MINUTE;
 			if ($minutes == 1) $return = "$minutes minute";
 			else $return = "$minutes minutes";
 		}
 		else if ($diffType == 'hours') {
-			$hours = $seconds / 3600;
+			$hours = $seconds / self::SECONDS_PER_HOUR;
 			if ($hours == 1) $return = "$hours hour";
 			else $return = "$hours hours";
 		}
 		else if ($diffType == 'days') {
-			$days = $seconds / 86400;
+			$days = $seconds / self::SECONDS_PER_DAY;
 			if ($days == 1) $return = "$days day";
 			else $return = "$days days";
 		}
 		else if ($diffType == 'weeks') {
-			$weeks = $seconds / 604800;
+			$weeks = $seconds / self::SECONDS_PER_WEEK;
 			if ($weeks == 1) $return = "$weeks week";
 			else $return = "$weeks weeks";
 		}
@@ -132,8 +140,8 @@ class DateChecker
 
 	    $to = $this->_to_DT;
 	    // $to->modify('+1 day');
-	    $interval = new DateInterval('P1D');
-	    $periods = new DatePeriod($this->_from_DT, $interval, $to);
+	    $interval = new \DateInterval('P1D');
+	    $periods = new \DatePeriod($this->_from_DT, $interval, $to);
 
 	    $days = 0;
 	    // loop through each day, and if the day is Mon-Fri then we'll add it to our total
@@ -162,7 +170,7 @@ class DateChecker
 		
 		// $seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
 		$seconds = $toSunday->getTimestamp() - $fromSunday->getTimestamp();
-		return intval($seconds / 604800);
+		return intval($seconds / self::SECONDS_PER_WEEK);
 
 	}
 }
