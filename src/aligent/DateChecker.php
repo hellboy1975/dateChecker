@@ -12,6 +12,11 @@ class DateChecker
 	private $_format = 'Y-m-d H:i:s';
 
 	public static $DIFF_TYPES = array('seconds', 'minutes', 'hours', 'days', 'weeks', 'weekdays', 'compWeeks', 'months', 'years');
+
+	const SECONDS_PER_MINUTE = 60;
+	const SECONDS_PER_HOUR = 3600;
+	const SECONDS_PER_DAY = 86400;
+	const SECONDS_PER_WEEK = 604800;
  
 	public function __construct($args) {
 
@@ -81,22 +86,22 @@ class DateChecker
 		}
 
 		else if ($diffType == 'minutes') {
-			$minutes = $seconds / 60;
+			$minutes = $seconds / self::SECONDS_PER_MINUTE;
 			if ($minutes == 1) $return = "$minutes minute";
 			else $return = "$minutes minutes";
 		}
 		else if ($diffType == 'hours') {
-			$hours = $seconds / 3600;
+			$hours = $seconds / self::SECONDS_PER_HOUR;
 			if ($hours == 1) $return = "$hours hour";
 			else $return = "$hours hours";
 		}
 		else if ($diffType == 'days') {
-			$days = $seconds / 86400;
+			$days = $seconds / self::SECONDS_PER_DAY;
 			if ($days == 1) $return = "$days day";
 			else $return = "$days days";
 		}
 		else if ($diffType == 'weeks') {
-			$weeks = $seconds / 604800;
+			$weeks = $seconds / self::SECONDS_PER_WEEK;
 			if ($weeks == 1) $return = "$weeks week";
 			else $return = "$weeks weeks";
 		}
@@ -165,7 +170,7 @@ class DateChecker
 		
 		// $seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
 		$seconds = $toSunday->getTimestamp() - $fromSunday->getTimestamp();
-		return intval($seconds / 604800);
+		return intval($seconds / self::SECONDS_PER_WEEK);
 
 	}
 }
