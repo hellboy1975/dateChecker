@@ -1,15 +1,12 @@
 <?php
 
 namespace aligent;
-// use \DateTime;
 
 class DateChecker
 {
 
 	private $_from_DT;
 	private $_to_DT;
-
-	private $_format = 'Y-m-d H:i:s';
 
 	public static $DIFF_TYPES = array('seconds', 'minutes', 'hours', 'days', 'weeks', 'weekdays', 'compWeeks', 'months', 'years');
 
@@ -25,7 +22,7 @@ class DateChecker
 		 
 		// check that timeFrom and timeTo are valid DateTime objects
 		if (!($args['timeFrom'] instanceof \DateTime)) {
-		  	//throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
+		  	throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
 		} 
 		if (!($args['timeTo'] instanceof \DateTime)) {
 		  	throw new \InvalidArgumentException('timeFrom was not a valid DateTime instance. Input was: ' . $args['timeFrom']);
@@ -41,9 +38,6 @@ class DateChecker
 		if (! in_array( $args['timeToZone'], $zones ) ) {
 			throw new \InvalidArgumentException('toZone should be a valid DateTimeZone. Input was: ' . $args['timeToZone']);	
 		}
-		 
-		// $this->_from_DT = $args['timeFrom']->setTimezone(new DateTimeZone( $args['timeFromZone'] ) );
-		// $this->_to_DT = $args['timeTo']->setTimezone(new DateTimeZone( $args['timeToZone'] ) );
 
 		$this->_from_DT = new \DateTime( $args['timeFrom']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeFromZone'] ));
 		$this->_to_DT = new \DateTime( $args['timeTo']->format('Y-m-d H:i:s'), new \DateTimeZone( $args['timeToZone'] ));
@@ -139,7 +133,6 @@ class DateChecker
 		$workingDays = [1, 2, 3, 4, 5]; // 6 is Saturday and 7 is Sunday
 
 	    $to = $this->_to_DT;
-	    // $to->modify('+1 day');
 	    $interval = new \DateInterval('P1D');
 	    $periods = new \DatePeriod($this->_from_DT, $interval, $to);
 
@@ -168,7 +161,6 @@ class DateChecker
 		// it's possible that the modify function can make the toSunday occur before the fromSunday value, so where this is the case the correct answer is 0 
 		if ($toSunday < $fromSunday) return 0;
 		
-		// $seconds = $this->_to_DT->getTimestamp() - $this->_from_DT->getTimestamp();
 		$seconds = $toSunday->getTimestamp() - $fromSunday->getTimestamp();
 		return intval($seconds / self::SECONDS_PER_WEEK);
 
