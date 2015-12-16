@@ -1,6 +1,7 @@
 $('#form_timeFrom').datetimepicker();
+//2015-12-16T00:00:00Z
 $('#form_timeTo').datetimepicker({
-    useCurrent: false //Important! See issue #1075
+    useCurrent: false 
 });
 
 // sets the min & max values for the datetimepickers
