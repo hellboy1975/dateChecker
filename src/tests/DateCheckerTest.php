@@ -63,8 +63,8 @@ class DateCheckerTest extends PHPUnit_Framework_TestCase
             'Minutes in a daylight non-transition' => array('minutes', '2015-01-01 00:00:00 ', '2015-01-01 04:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '240 minutes'),
 
             // comparisons between timezones that do and don't use DST should reflect the hour difference
-            'Minutes in a daylight saving end in non-DST zone' => array('minutes', '2015-12-04 00:00:00', '2015-12-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '180 minutes'),
-            'Minutes in a daylight saving end in non-DST zone' => array('minutes', '2015-08-04 00:00:00', '2015-08-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '240 minutes'),    
+            'Minutes between DST and non-DST zone during DST period' => array('minutes', '2015-12-04 00:00:00', '2015-12-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '180 minutes'),
+            'Minutes between DST and non-DST zone outside DST period' => array('minutes', '2015-08-04 00:00:00', '2015-08-04 04:00:00', "Australia/Brisbane", "Australia/Sydney", '240 minutes'),    
             
             // the number of days and weeks in a leap year is different from a normal year!
             'Weeks in leap-year' => array('weeks', '2000-01-01 00:00:00 ', '2001-01-01 00:00:00 ', "Australia/Adelaide", "Australia/Adelaide", '52.285714285714 weeks'),
